@@ -42,7 +42,7 @@ ansible-playbook -i hosts master.yml
 ```
 
 ```
-ansible-playbook -i hosts  workers.yml
+ansible-playbook -i hosts workers.yml
 ```
 
 ## Validate cluster
