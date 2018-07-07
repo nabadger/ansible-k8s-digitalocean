@@ -59,6 +59,22 @@ worker01   Ready     <none>    12m       v1.11.0
 worker02   Ready     <none>    12m       v1.11.0
 ```
 
+## Accessing locally
+
+If you have `kubectl` installed on your laptop, you can copy over the remote kubeconfig from the master.
+
+```
+» mkdir -p ~/.kube/digital-ocean
+» scp ubuntu@<master-ip>:.kube/config ~/.kube/digital-ocean/config
+» export KUBECONFIG=~/.kube/digital-ocean/config
+
+» kubectl get nodes
+NAME       STATUS     ROLES     AGE       VERSION
+master     Ready      master    1h        v1.11.0
+worker01   Ready      <none>    1h        v1.11.0
+worker02   Ready      <none>    1h        v1.11.0
+```
+
 # Gotchas / concerns
 
 - Ansible will configure hosts over ssh. Be sure to answer yes/no when it asks you to add the host to the list of known-hosts (i.e. don't skip it)
