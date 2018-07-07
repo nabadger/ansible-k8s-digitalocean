@@ -61,5 +61,5 @@ worker02   Ready     <none>    12m       v1.11.0
 
 # Gotchas / concerns
 
-- Ansible will configue the host over ssh. Be sure to answer yes/no when it asks you to add the host to the list of known-hosts (i.e. don't skip it)
-- Not sure how secure this installation of the cluster is, so assume that there's none :)
+- Ansible will configure hosts over ssh. Be sure to answer yes/no when it asks you to add the host to the list of known-hosts (i.e. don't skip it)
+- Not sure how secure this installation of the cluster is, so assume zero security
