@@ -76,7 +76,39 @@ worker01   Ready      <none>    1h        v1.11.0
 worker02   Ready      <none>    1h        v1.11.0
 ```
 
-# Gotchas / concerns
+# Security
 
-- Ansible will configure hosts over ssh. Be sure to answer yes/no when it asks you to add the host to the list of known-hosts (i.e. don't skip it)
-- Not sure how secure this installation of the cluster is, so assume zero security
+I've not taken any additional measures over the default install via `kubeadm`.
+
+## General
+
+- There is no dashboard installed by default
+- There is no `NetworkPolicy` in place
+- There is no `PodSecurityPolicy` in place
+- RBAC is enabled and configuration seems to have sensible defaults
+
+## Relevant API Server Settings
+```
+./kube-apiserver --authorization-mode=Node,RBAC \
+                 --allow-privileged=true \
+                  --insecure-port=0 \
+                  --secure-port=6443 \
+                  ...
+```
+
+## Relevant Kubelet Settings
+```
+authentication:
+  anonymous:
+    enabled: false
+  webhook:
+    cacheTTL: 2m0s
+    enabled: true
+  x509:
+    clientCAFile: /etc/kubernetes/pki/ca.crt
+authorization:
+  mode: Webhook
+  webhook:
+    cacheAuthorizedTTL: 5m0s
+    cacheUnauthorizedTTL: 30s
+```
