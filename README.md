@@ -12,6 +12,7 @@ https://www.digitalocean.com/community/tutorials/how-to-create-a-kubernetes-1-10
 
 - Create 3 droplets on digital-ocean (ubuntu / 1gig ram / any region)
 - Create an ssh-keypair. By default, `initial.yml` assumes the public key on your local machine is stored at `~/.ssh/id_rsa.pub` 
+- Add the key: `ssh-add ~/.ssh/id_rsa`
 - Install ansible (`ansible-playbook`) on your local machine
 
 ### Configure hosts
