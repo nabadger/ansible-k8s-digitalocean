@@ -12,6 +12,7 @@ https://www.digitalocean.com/community/tutorials/how-to-create-a-kubernetes-1-10
 
 - Create 3 droplets on digital-ocean (ubuntu / 1gig ram / any region)
 - Create an ssh-keypair. By default, `initial.yml` assumes the public key on your local machine is stored at `~/.ssh/id_rsa.pub` 
+- Add the key: `ssh-add ~/.ssh/id_rsa`
 - Install ansible (`ansible-playbook`) on your local machine
 
 ### Configure hosts
@@ -42,7 +43,7 @@ ansible-playbook -i hosts master.yml
 ```
 
 ```
-ansible-playbook -i hosts  workers.yml
+ansible-playbook -i hosts workers.yml
 ```
 
 ## Validate cluster
@@ -59,7 +60,23 @@ worker01   Ready     <none>    12m       v1.11.0
 worker02   Ready     <none>    12m       v1.11.0
 ```
 
+## Accessing locally
+
+If you have `kubectl` installed on your laptop, you can copy over the remote kubeconfig from the master.
+
+```
+» mkdir -p ~/.kube/digital-ocean
+» scp ubuntu@<master-ip>:.kube/config ~/.kube/digital-ocean/config
+» export KUBECONFIG=~/.kube/digital-ocean/config
+
+» kubectl get nodes
+NAME       STATUS     ROLES     AGE       VERSION
+master     Ready      master    1h        v1.11.0
+worker01   Ready      <none>    1h        v1.11.0
+worker02   Ready      <none>    1h        v1.11.0
+```
+
 # Gotchas / concerns
 
-- Ansible will configue the host over ssh. Be sure to answer yes/no when it asks you to add the host to the list of known-hosts (i.e. don't skip it)
-- Not sure how secure this installation of the cluster is, so assume that there's none :)
+- Ansible will configure hosts over ssh. Be sure to answer yes/no when it asks you to add the host to the list of known-hosts (i.e. don't skip it)
+- Not sure how secure this installation of the cluster is, so assume zero security
